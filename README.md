@@ -1,17 +1,17 @@
-# Terraform Provider for ASM
+# Terraform Provider for Gravicore
 
-The Terraform provider for ASM allows you to manage AppSync Merged resources using Terraform. This document provides an overview of the provider's configuration, resources, and data sources.
+The Terraform provider for Gravicore allows you to manage AppSync Merged resources using Terraform. This document provides an overview of the provider's configuration and resources.
 
 ## Overview
 
-The `asm` provider is used to interact with ASM services. This documentation will cover:
+The `Gravicore` provider is currently used to interact with AWS AppSync resources. This documentation will cover:
 
 - Provider Configuration
 - Resources
 
 ## Provider Configuration
 
-To use the `asm` provider, you need to specify the required configuration in your Terraform configuration file. The provider uses the same access key and secret key from the environment that the `aws` provider uses. Here’s an example of how to configure the provider:
+To use the `gravicore` provider, you need to specify the required configuration in your Terraform configuration file. The provider uses the same access key and secret key from the environment that the `aws` provider uses. Here’s an example of how to configure the provider:
 
 ```hcl
 terraform {
@@ -24,7 +24,7 @@ terraform {
 }
 
 provider "gravicore" {
-  region  = "us-west-1"
+  region  = "us-east-1"
 }
 ```
 
