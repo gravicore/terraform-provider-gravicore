@@ -22,25 +22,30 @@ func resourceGravicoreAwsAppsyncStartSchemaMerge() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"association_id": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The identifier of the schema association.",
 			},
 			"merged_api_id": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The identifier of the merged API.",
 			},
 			"timeout_seconds": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Default:  30,
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Default:     30,
+				Description: "The number of seconds to wait for the schema merge to complete. ",
 			},
 			"id": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The identifier of the schema merge.",
 			},
 			"status": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The status of the schema merge.",
 			},
 		},
 	}

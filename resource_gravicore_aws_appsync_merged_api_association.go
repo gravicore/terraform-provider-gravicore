@@ -22,34 +22,40 @@ func resourceGravicoreAwsAppsyncMergedApiAssociation() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The description of the merged API association.",
 			},
 			"merged_api_id": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The identifier of the merged API.",
 			},
 			"source_api_association_config": {
-				Type:     schema.TypeList,
-				Optional: true,
-				ForceNew: true,
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: "The configuration for the source API association.",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"merge_type": {
-							Type:     schema.TypeString,
-							Optional: true,
-							Default:  "AUTO_MERGE",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Default:     "AUTO_MERGE",
+							Description: "The type of merge to perform. Valid values are AUTO_MERGE and MANUAL_MERGE. ",
 						},
 					},
 				},
 			},
 			"source_api_id": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The identifier of the source API.",
 			},
 			"id": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The identifier of the merged API association.",
 			},
 		},
 	}
