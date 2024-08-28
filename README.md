@@ -11,7 +11,7 @@ The `gravicore` provider is currently used to interact with AWS AppSync resource
 
 ## Provider Configuration
 
-To use the `gravicore` provider, you need to specify the required configuration in your Terraform configuration file. The provider uses the same access key and secret key from the environment that the `aws` provider uses. Here’s an example of how to configure the provider:
+To use the `gravicore` provider, you need to specify the required configuration in your Terraform configuration file. The provider uses the same access key and secret key from the environment that the `aws` provider uses.
 
 ## Usage
 
