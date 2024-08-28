@@ -15,7 +15,7 @@ description: |-
 ```terraform
 terraform {
   required_providers {
-    asm = {
+    gravicore = {
       source  = "gravicore/gravicore"
       version = "1.0.1"
     }
