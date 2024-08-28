@@ -1,0 +1,1 @@
+terraform import gravicore_aws_appsync_merged_api_association.example merged-api-id_association-id

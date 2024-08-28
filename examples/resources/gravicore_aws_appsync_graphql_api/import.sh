@@ -1,0 +1,1 @@
+terraform import gravicore_aws_appsync_graphql_api.example api-id

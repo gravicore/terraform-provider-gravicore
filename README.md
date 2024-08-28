@@ -4,7 +4,7 @@ The Terraform provider for Gravicore allows you to manage AppSync Merged resourc
 
 ## Overview
 
-The `Gravicore` provider is currently used to interact with AWS AppSync resources. This documentation will cover:
+The `gravicore` provider is currently used to interact with AWS AppSync resources. This documentation will cover:
 
 - Provider Configuration
 - Resources
@@ -13,82 +13,9 @@ The `Gravicore` provider is currently used to interact with AWS AppSync resource
 
 To use the `gravicore` provider, you need to specify the required configuration in your Terraform configuration file. The provider uses the same access key and secret key from the environment that the `aws` provider uses. Here’s an example of how to configure the provider:
 
-```hcl
-terraform {
-  required_providers {
-    asm = {
-      source  = "gravicore/gravicore"
-      version = "1.0.0"
-    }
-  }
-}
-
-provider "gravicore" {
-  region  = "us-east-1"
-}
-```
-
 ## Usage
 
-**UNDER CONSTRUCTION**
-
-```hcl
-resource "gravicore_aws_appsync_graphql_api" "default" {
-  name                = "provider-test-1"
-  authentication_type = "AMAZON_COGNITO_USER_POOLS"
-  api_type            = "MERGED"
-
-  user_pool_config {
-    user_pool_id   = "us-east-1_potato"
-    aws_region     = "us-east-1"
-    default_action = "ALLOW"
-  }
-
-  merged_api_execution_role_arn = "arn:aws:iam::123456:role/potato"
-  xray_enabled                  = true
-
-  enhanced_metrics_config {
-    resolver_level_metrics_behavior    = "PER_RESOLVER_METRICS"
-    data_source_level_metrics_behavior = "PER_DATA_SOURCE_METRICS"
-    operation_level_metrics_config     = "ENABLED"
-  }
-
-  log_config {
-    field_log_level          = "NONE"
-    cloudwatch_logs_role_arn = "arn:aws:iam::123456:role/potato"
-    exclude_verbose_content  = true
-  }
-
-  tags = {
-    Name  = "provider-test-1"
-    Test1 = "test1"
-    Test2 = "test2"
-    Test3 = "test3"
-  }
-}
-
-resource "aws_appsync_graphql_api" "default" {
-  authentication_type = "AMAZON_COGNITO_USER_POOLS"
-  name                = "provider-test-2"
-
-  user_pool_config {
-    aws_region     = "us-east-1"
-    default_action = "ALLOW"
-    user_pool_id   = "us-east-1_potato"
-  }
-
-  tags = {
-    Name = "example"
-    Test = "test"
-  }
-}
-
-resource "gravicore_aws_appsync_merged_api_association" "default" {
-  description           = "provider-test-2-into-provider-test-1"
-  merged_api_identifier = gravicore_aws_appsync_graphql_api.default.id
-  source_api_identifier = aws_appsync_graphql_api.default.id
-  source_api_association_config {
-    merge_type = "AUTO_MERGE"
-  }
-}
-```
+- [provider](docs/index.md)
+- [resource_gravicore_aws_appsync_graphql_api](docs/resources/aws_appsync_graphql_api.md)
+- [resource_gravicore_aws_appsync_merged_api_association](docs/resources/aws_appsync_merged_api_association.md)
+- [resource_gravicore_aws_appsync_start_schema_merge](docs/resources/aws_appsync_start_schema_merge.md)
