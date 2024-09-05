@@ -108,8 +108,8 @@ func resourceGravicoreAwsAppsyncMergedApiAssociationUpdate(d *schema.ResourceDat
 	client := meta.(*AWSClient)
 
 	input := &appsync.UpdateSourceApiAssociationInput{
-		AssociationId:       aws.String(d.Id()),
-		MergedApiIdentifier: aws.String(d.Get("merged_api_id").(string)),
+		AssociationId:       aws.String(strings.Split(d.Id(), "_")[1]),
+		MergedApiIdentifier: aws.String(strings.Split(d.Id(), "_")[0]),
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -132,7 +132,7 @@ func resourceGravicoreAwsAppsyncMergedApiAssociationDelete(d *schema.ResourceDat
 	client := meta.(*AWSClient)
 
 	input := &appsync.DisassociateMergedGraphqlApiInput{
-		AssociationId:       aws.String(d.Id()),
+		AssociationId:       aws.String(strings.Split(d.Id(), "_")[1]),
 		SourceApiIdentifier: aws.String(d.Get("source_api_id").(string)),
 	}
 
