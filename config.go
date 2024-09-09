@@ -1,7 +1,10 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/appsync"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -81,4 +84,11 @@ func updateTags(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	return nil
+}
+
+func isNotFoundError(err error) bool {
+	if awsErr, ok := err.(awserr.RequestFailure); ok {
+		return awsErr.StatusCode() == http.StatusNotFound
+	}
+	return false
 }

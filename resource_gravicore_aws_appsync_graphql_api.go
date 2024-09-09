@@ -372,6 +372,10 @@ func resourceGravicoreAwsAppsyncGraphQLApiRead(d *schema.ResourceData, meta inte
 	}
 	result, err := client.AppSync.GetGraphqlApi(input)
 	if err != nil {
+		if isNotFoundError(err) {
+			d.SetId("")
+			return nil
+		}
 		return err
 	}
 

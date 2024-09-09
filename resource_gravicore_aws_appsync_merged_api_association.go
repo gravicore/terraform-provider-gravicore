@@ -92,6 +92,10 @@ func resourceGravicoreAwsAppsyncMergedApiAssociationRead(d *schema.ResourceData,
 	}
 	result, err := client.AppSync.GetSourceApiAssociation(input)
 	if err != nil {
+		if isNotFoundError(err) {
+			d.SetId("")
+			return nil
+		}
 		return err
 	}
 
