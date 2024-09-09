@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -62,12 +63,27 @@ func resourceGravicoreAwsAppsyncStartSchemaMergeCreate(d *schema.ResourceData, m
 		MergedApiIdentifier: aws.String(mergedApiId),
 	}
 
-	_, err := client.AppSync.StartSchemaMerge(input)
+	timeoutSeconds := d.Get("timeout_seconds").(int)
+	var err error
+	for i := 0; i < timeoutSeconds; i++ {
+		_, err = client.AppSync.StartSchemaMerge(input)
+		if err == nil {
+			break
+		}
+
+		if strings.Contains(err.Error(), "ConcurrentModificationException") {
+			time.Sleep(1 * time.Second)
+			continue
+		}
+
+		return err
+	}
+
 	if err != nil {
 		return err
 	}
 
-	status, err := wait("MERGE_SUCCESS", d, meta)
+	status, err := retryUntil("MERGE_SUCCESS", d, meta)
 	if err != nil {
 		return err
 	}
@@ -82,18 +98,18 @@ func resourceGravicoreAwsAppsyncStartSchemaMergeUpdate(d *schema.ResourceData, m
 	return resourceGravicoreAwsAppsyncStartSchemaMergeCreate(d, meta)
 }
 
-func wait(expectedStatus string, d *schema.ResourceData, meta interface{}) (string, error) {
+func retryUntil(expectedStatus string, d *schema.ResourceData, meta interface{}) (string, error) {
 	associationId := d.Get("association_id").(string)
 	mergedApiId := d.Get("merged_api_id").(string)
-	timeoutSeconds := d.Get("timeout_seconds").(int)
 
+	input := &appsync.GetSourceApiAssociationInput{
+		AssociationId:       aws.String(associationId),
+		MergedApiIdentifier: aws.String(mergedApiId),
+	}
+
+	timeoutSeconds := d.Get("timeout_seconds").(int)
 	client := meta.(*AWSClient)
 	for i := 0; i < timeoutSeconds; i++ {
-		input := &appsync.GetSourceApiAssociationInput{
-			AssociationId:       aws.String(associationId),
-			MergedApiIdentifier: aws.String(mergedApiId),
-		}
-
 		result, err := client.AppSync.GetSourceApiAssociation(input)
 		if err != nil {
 			return "", err
